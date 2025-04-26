@@ -1,21 +1,30 @@
+# .github/workflows/send-slack-message.yml
 name: Send Scheduled Slack Message
 
 on:
   schedule:
-    - cron: '0 15 * * *'  # 매일 한국시간 자정 (UTC 15:00)
+    - cron: '0 15 * * *'   # 매일 KST 00:00
   workflow_dispatch:
 
 jobs:
   post-message:
     runs-on: ubuntu-latest
+
     steps:
       - name: Send message to Slack
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
         run: |
-          MESSAGE=":star: 오늘의 필사 챌린지!\n\nhttps://your-notion-page-url\n\n✍️ 오늘의 문장:\n\"나는 오늘도 나아간다.\""
+          # MESSAGE 변수를 싱글쿼트로 감싸면 내부의 " 따옴표 충돌이 없어집니다.
+          MESSAGE=':star: 오늘의 필사 챌린지!
+
+https://your-notion-page-url
+
+✍️ 오늘의 문장:
+"나는 오늘도 나아간다."'
+
           curl -X POST https://slack.com/api/chat.postMessage \
             -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
-            -H "Content-type: application/json; charset=utf-8" \
-            --data "{\"channel\":\"$SLACK_CHANNEL\",\"text\":\"$MESSAGE\"}"
+            -H "Content-Type: application/json; charset=utf-8" \
+            --data "{\"channel\":\"${SLACK_CHANNEL}\",\"text\":\"${MESSAGE}\"}"
