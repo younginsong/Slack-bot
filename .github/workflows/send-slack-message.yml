@@ -1,22 +1,19 @@
-# .github/workflows/send-slack-message.yml
 name: Send Scheduled Slack Message
 
 on:
   schedule:
     - cron: '0 15 * * *'   # 매일 KST 00:00
-  workflow_dispatch:
+  workflow_dispatch:      # ← 이 줄이 있어야 수동 실행 버튼이 생겨요
 
 jobs:
   post-message:
     runs-on: ubuntu-latest
-
     steps:
       - name: Send message to Slack
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
         run: |
-          # MESSAGE 변수를 싱글쿼트로 감싸면 내부의 " 따옴표 충돌이 없어집니다.
           MESSAGE=':star: 오늘의 필사 챌린지!
 
 https://your-notion-page-url
