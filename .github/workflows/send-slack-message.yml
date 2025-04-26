@@ -2,7 +2,7 @@ name: Send Scheduled Slack Message
 
 on:
   schedule:
-    - cron: '58 7 * * *'  # 매일 KST 16:58 (UTC 기준 07:58)
+    - cron: '3 8 * * *'  # 매일 KST 17:03 (UTC 기준 08:03)
   workflow_dispatch:  # 수동으로 실행도 가능하게
 
 jobs:
