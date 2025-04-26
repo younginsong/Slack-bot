@@ -19,5 +19,5 @@ jobs:
             -H "Content-type: application/json" \
             --data '{
               "channel": "'"$SLACK_CHANNEL"'",
-              "text": ":star: 오늘의 필사 챌린지!\n\nhttps://your-notion-page-url\n\n✍️ 오늘의 문장:\n"나는 오늘도 나아간다."'
+              "text": ":star: 오늘의 필사 챌린지!\n\nhttps://your-notion-page-url\n\n✍️ 오늘의 문장:\n\"나는 오늘도 나아간다.\""
             }'
