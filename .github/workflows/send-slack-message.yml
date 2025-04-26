@@ -1,0 +1,23 @@
+name: Send Scheduled Slack Message
+
+on:
+  schedule:
+    - cron: '0 15 * * *'  # 매일 KST 00:00 (UTC 기준 15:00)
+  workflow_dispatch:  # 수동으로 실행도 가능하게
+
+jobs:
+  post-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message to Slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+        run: |
+          curl -X POST https://slack.com/api/chat.postMessage \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-type: application/json" \
+            --data '{
+              "channel": "'"$SLACK_CHANNEL"'",
+              "text": ":star: 오늘의 필사 챌린지!\n\nhttps://your-notion-page-url\n\n✍️ 오늘의 문장:\n"나는 오늘도 나아간다."'
+            }'
